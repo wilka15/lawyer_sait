@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Helper — Юридический помощник для Majestic RP</title>
+    <meta name="description" content="Бот-адвокат для Majestic RP. Поиск по УК и ПК, ИИ-консультации, премиум-подписка, реферальная программа.">
+    <meta property="og:title" content="Lawyer Helper — Юридический помощник для Majestic RP">
+    <meta property="og:description" content="Пригласите бота на сервер и получите юридическую помощь по УК и ПК штата Сан-Андреас.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#5865F2">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Шапка */
+        .header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 40px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #a0a0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #5865F2;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #5865F2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid #5865F2;
+            color: #5865F2;
+        }
+
+        .btn-outline:hover {
+            background: #5865F2;
+            color: white;
+        }
+
+        .btn-success {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        /* Герой-секция */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff, #5865F2, #a0a0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #aaa;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            animation: fadeInUp 0.6s ease 0.1s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease 0.2s backwards;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #5865F2;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Секции */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, #5865F2, #a0a0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(88,101,242,0.3);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Тарифы */
+        .pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid #5865F2;
+            background: rgba(88,101,242,0.1);
+        }
+
+        .pricing-price {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .pricing-price span {
+            font-size: 16px;
+            color: #888;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Реферальная программа */
+        .referral-box {
+            background: linear-gradient(135deg, rgba(46,204,113,0.1), rgba(88,101,242,0.1));
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(46,204,113,0.3);
+        }
+
+        .referral-code {
+            background: #1a1a2e;
+            padding: 15px 30px;
+            border-radius: 12px;
+            display: inline-block;
+            font-family: monospace;
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin: 20px 0;
+            border: 1px solid #2ecc71;
+        }
+
+        /* Команды */
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .command-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-family: monospace;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .command-prefix {
+            color: #5865F2;
+            font-weight: 600;
+        }
+
+        /* Футер */
+        .footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #888;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .section-title {
+                font-size: 28px;
+            }
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">⚖️</div>
+                <div class="logo-text">Lawyer Helper</div>
+            </div>
+            <nav class="nav">
+                <a href="#features">Возможности</a>
+                <a href="#pricing">Тарифы</a>
+                <a href="#referral">Рефералы</a>
+                <a href="#commands">Команды</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=ВАШ_ID_БОТА&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить бота</a>
+            </nav>
+        </header>
+
+        <!-- Герой-секция -->
+        <section class="hero">
+            <h1>Юридический помощник<br>для Majestic RP</h1>
+            <p>Быстрый поиск по УК и ПК, ИИ-консультации, премиум-подписка и реферальная программа. Пригласите бота на свой сервер и получите доступ к полной базе законов штата Сан-Андреас.</p>
+            <div class="hero-buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=ВАШ_ID_БОТА&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить на сервер</a>
+                <a href="#features" class="btn btn-outline">📖 Узнать больше</a>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">статей УК</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">16+</div>
+                    <div class="stat-label">статей ПК</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">пробных запросов</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Возможности -->
+        <section id="features" class="section">
+            <h2 class="section-title"><span>Возможности</span> бота</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3>Уголовный кодекс</h3>
+                    <p>Поиск по статьям УК штата Сан-Андреас. Быстрый доступ к наказаниям и составам преступлений.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3>Процессуальный кодекс</h3>
+                    <p>Права задержанного, порядок задержания, правила обыска и другие процессуальные нормы.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>ИИ-консультации</h3>
+                    <p>Задайте любой вопрос по законодательству — нейросеть даст ответ на основе УК и ПК.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3>Премиум-подписка</h3>
+                    <p>Безлимитные запросы от 55 ₽ в месяц. Выберите срок: 30, 60, 90, 180 или 365 дней.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌟</div>
+                    <h3>Реферальная программа</h3>
+                    <p>Пригласите друга → вы получите +14 дней премиума, друг +5 пробных запросов.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Работа в ЛС</h3>
+                    <p>Бот работает в личных сообщениях. Все команды доступны без сервера.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Тарифы -->
+        <section id="pricing" class="section">
+            <h2 class="section-title"><span>Выберите</span> срок подписки</h2>
+            <div class="pricing">
+                <div class="pricing-card">
+                    <h3>30 дней</h3>
+                    <div class="pricing-price">55 ₽</div>
+                    <ul class="pricing-features">
+                        <li>✅ Безлимитные запросы</li>
+                        <li>✅ Приоритетная поддержка</li>
+                        <li>✅ Все функции бота</li>
+                    </ul>
+                    <a href="#buy" class="btn btn-primary">Выбрать</a>
+                </div>
+                <div class="pricing-card popular">
+                    <h3>90 дней</h3>
+                    <div class="pricing-price">165 ₽</div>
+                    <ul class="pricing-features">
+                        <li>✅ Безлимитные запросы</li>
+                        <li>✅ Приоритетная поддержка</li>
+                        <li>✅ Экономия 15%</li>
+                    </ul>
+                    <a href="#buy" class="btn btn-primary">Выбрать</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>365 дней</h3>
+                    <div class="pricing-price">660 ₽</div>
+                    <ul class="pricing-features">
+                        <li>✅ Безлимитные запросы</li>
+                        <li>✅ Приоритетная поддержка</li>
+                        <li>✅ Экономия 45%</li>
+                    </ul>
+                    <a href="#buy" class="btn btn-primary">Выбрать</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Реферальная программа -->
+        <section id="referral" class="section">
+            <h2 class="section-title"><span>Реферальная</span> программа</h2>
+            <div class="referral-box">
+                <div class="feature-icon" style="font-size: 48px;">🎁</div>
+                <h3>Приглашайте друзей и получайте награды!</h3>
+                <p>У каждого пользователя есть уникальный реферальный код.<br>Поделитесь им с друзьями и получайте бонусы.</p>
+                <div class="referral-code">
+                    /код
+                </div>
+                <p style="margin-top: 20px;">
+                    🎁 <strong>Приглашённый:</strong> +5 пробных запросов<br>
+                    👑 <strong>Пригласивший:</strong> +14 дней премиума
+                </p>
+            </div>
+        </section>
+
+        <!-- Команды -->
+        <section id="commands" class="section">
+            <h2 class="section-title"><span>Популярные</span> команды</h2>
+            <div class="commands-grid">
+                <div class="command-item"><span class="command-prefix">/ук</span> убийство</div>
+                <div class="command-item"><span class="command-prefix">/пк</span> задержание</div>
+                <div class="command-item"><span class="command-prefix">/вопрос</span> Какое наказание за кражу?</div>
+                <div class="command-item"><span class="command-prefix">/купить</span></div>
+                <div class="command-item"><span class="command-prefix">/премиум статус</span></div>
+                <div class="command-item"><span class="command-prefix">/код</span></div>
+                <div class="command-item"><span class="command-prefix">/активировать код</span> ABC12345</div>
+                <div class="command-item"><span class="command-prefix">/разделы ук</span></div>
+                <div class="command-item"><span class="command-prefix">/поддержка</span> У меня вопрос</div>
+                <div class="command-item"><span class="command-prefix">/справка</span></div>
+            </div>
+        </section>
+
+        <!-- Как начать -->
+        <section class="section">
+            <h2 class="section-title"><span>Как начать</span> использовать?</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">1️⃣</div>
+                    <h3>Пригласите бота</h3>
+                    <p>Нажмите кнопку «Пригласить на сервер» и выберите нужный сервер Discord.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">2️⃣</div>
+                    <h3>Начните использовать</h3>
+                    <p>Введите /справка в любом канале или в личных сообщениях бота.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">3️⃣</div>
+                    <h3>Улучшите опыт</h3>
+                    <p>Купите премиум или пригласите друзей по реферальной программе.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <p>⚖️ Lawyer Helper — юридический помощник для Majestic RP</p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                Бот создан на основе Уголовного и Процессуального кодексов штата Сан-Андреас.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
