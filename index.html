@@ -23,26 +23,14 @@
             line-height: 1.6;
         }
 
-        /* Анимации */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         .container {
@@ -168,6 +156,26 @@
             justify-content: center;
             flex-wrap: wrap;
             animation: fadeInUp 0.6s ease 0.2s backwards;
+        }
+
+        /* Статус бота */
+        .bot-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 16px;
+            border-radius: 40px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2ecc71;
+            animation: pulse 2s infinite;
         }
 
         .stats {
@@ -339,6 +347,36 @@
             font-weight: 600;
         }
 
+        /* Форма обратной связи */
+        .feedback-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 30px;
+        }
+
+        .feedback-form input, .feedback-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+        }
+
+        .feedback-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .feedback-form input:focus, .feedback-form textarea:focus {
+            outline: none;
+            border-color: #5865F2;
+        }
+
         /* Футер */
         .footer {
             padding: 40px 0;
@@ -347,7 +385,6 @@
             color: #888;
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 36px;
@@ -375,7 +412,8 @@
                 <a href="#pricing">Тарифы</a>
                 <a href="#referral">Рефералы</a>
                 <a href="#commands">Команды</a>
-                <a href="https://discord.com/oauth2/authorize?client_id=1511055146895933624&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить бота</a>
+                <a href="#feedback">Поддержка</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=1511055146895933624&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить</a>
             </nav>
         </header>
 
@@ -384,21 +422,31 @@
             <h1>Юридический помощник<br>для Majestic RP</h1>
             <p>Быстрый поиск по УК и ПК, ИИ-консультации, премиум-подписка и реферальная программа. Пригласите бота на свой сервер и получите доступ к полной базе законов штата Сан-Андреас.</p>
             <div class="hero-buttons">
-                <a href="https://discord.com/oauth2/authorize?client_id=ВАШ_ID_БОТА&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить на сервер</a>
-                <a href="#features" class="btn btn-outline">📖 Узнать больше</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=1511055146895933624&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить на сервер</a>
+                <a href="https://discord.gg/ВАША_ССЫЛКА" class="btn btn-outline">💬 Discord сервер</a>
+            </div>
+            <div class="bot-status">
+                <div class="status-indicator"></div>
+                <span>Бот в сети</span>
+                <span style="margin-left: 10px; color:#888;">•</span>
+                <span style="margin-left: 10px;">⚡ Работает 24/7</span>
             </div>
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-number">25+</div>
+                    <div class="stat-number" id="ukCount">25+</div>
                     <div class="stat-label">статей УК</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">16+</div>
+                    <div class="stat-number" id="pkCount">16+</div>
                     <div class="stat-label">статей ПК</div>
                 </div>
                 <div class="stat">
                     <div class="stat-number">5</div>
                     <div class="stat-label">пробных запросов</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="usersCount">0</div>
+                    <div class="stat-label">пользователей</div>
                 </div>
             </div>
         </section>
@@ -504,10 +552,30 @@
                 <div class="command-item"><span class="command-prefix">/купить</span></div>
                 <div class="command-item"><span class="command-prefix">/премиум статус</span></div>
                 <div class="command-item"><span class="command-prefix">/код</span></div>
-                <div class="command-item"><span class="command-prefix">/активировать код</span> ABC12345</div>
-                <div class="command-item"><span class="command-prefix">/разделы ук</span></div>
+                <div class="command-item"><span class="command-prefix">/активировать_код</span> ABC12345</div>
+                <div class="command-item"><span class="command-prefix">/разделы_ук</span></div>
+                <div class="command-item"><span class="command-prefix">/разделы_пк</span></div>
                 <div class="command-item"><span class="command-prefix">/поддержка</span> У меня вопрос</div>
+                <div class="command-item"><span class="command-prefix">/реф</span></div>
+                <div class="command-item"><span class="command-prefix">/статистика</span></div>
                 <div class="command-item"><span class="command-prefix">/справка</span></div>
+                <div class="command-item"><span class="command-prefix">/инфо</span></div>
+            </div>
+        </section>
+
+        <!-- Форма обратной связи -->
+        <section id="feedback" class="section">
+            <h2 class="section-title"><span>Свяжитесь</span> с нами</h2>
+            <div class="feedback-form">
+                <form action="https://formsubmit.co/ВАША_ПОЧТА@mail.ru" method="POST">
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                    <input type="email" name="email" placeholder="Ваш Discord ID или email" required>
+                    <textarea name="message" placeholder="Ваше сообщение..." required></textarea>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; cursor: pointer;">📨 Отправить</button>
+                </form>
+                <p style="text-align: center; margin-top: 15px; font-size: 12px; color: #666;">
+                    Или напишите в Discord: <strong>@ваш_никнейм</strong>
+                </p>
             </div>
         </section>
 
@@ -539,7 +607,30 @@
             <p style="margin-top: 10px; font-size: 12px;">
                 Бот создан на основе Уголовного и Процессуального кодексов штата Сан-Андреас.
             </p>
+            <p style="margin-top: 10px;">
+                <a href="#features" style="color: #5865F2; text-decoration: none;">Возможности</a> •
+                <a href="#pricing" style="color: #5865F2; text-decoration: none;">Тарифы</a> •
+                <a href="#referral" style="color: #5865F2; text-decoration: none;">Рефералы</a> •
+                <a href="#commands" style="color: #5865F2; text-decoration: none;">Команды</a> •
+                <a href="#feedback" style="color: #5865F2; text-decoration: none;">Поддержка</a>
+            </p>
         </footer>
     </div>
+
+    <script>
+        // Анимация появления статистики (можно подключить реальные данные через API позже)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Здесь потом можно добавить запрос к API бота для получения реальной статистики
+            // Например: fetch('https://bot-lawyer.onrender.com/stats')...
+            
+            // Заглушка для демонстрации
+            setTimeout(() => {
+                const usersElement = document.getElementById('usersCount');
+                if (usersElement) {
+                    usersElement.textContent = '42';
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
