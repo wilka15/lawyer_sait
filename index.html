@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lawyer Helper — Юридический помощник для Majestic RP</title>
     <meta name="description" content="Бот-адвокат для Majestic RP. Поиск по УК и ПК, ИИ-консультации, премиум-подписка, реферальная программа.">
-    <meta property="og:title" content="Lawyer Helper — Юридический помощник для Majestic RP">
-    <meta property="og:description" content="Пригласите бота на сервер и получите юридическую помощь по УК и ПК штата Сан-Андреас.">
-    <meta property="og:type" content="website">
     <meta name="theme-color" content="#5865F2">
     <style>
         * {
@@ -16,7 +13,6 @@
             box-sizing: border-box;
         }
 
-        /* Тёмная тема (по умолчанию) */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
@@ -25,7 +21,6 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* Светлая тема */
         body.light {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             color: #1a1a2e;
@@ -33,7 +28,6 @@
 
         body.light .feature-card,
         body.light .pricing-card,
-        body.light .feedback-form,
         body.light .command-item,
         body.light .referral-box {
             background: rgba(0,0,0,0.05);
@@ -41,7 +35,6 @@
         }
 
         body.light .feature-card p,
-        body.light .pricing-features li,
         body.light .command-item {
             color: #555;
         }
@@ -58,7 +51,6 @@
             background: rgba(0,0,0,0.05);
         }
 
-        /* Кнопка переключения темы */
         .theme-toggle {
             background: rgba(255,255,255,0.1);
             border: none;
@@ -70,10 +62,12 @@
             align-items: center;
             gap: 8px;
             transition: all 0.3s;
+            color: white;
         }
 
         body.light .theme-toggle {
             background: rgba(0,0,0,0.1);
+            color: #1a1a2e;
         }
 
         .theme-toggle:hover {
@@ -96,7 +90,6 @@
             padding: 0 20px;
         }
 
-        /* Шапка */
         .header {
             padding: 20px 0;
             display: flex;
@@ -125,12 +118,6 @@
             font-size: 24px;
             font-weight: 700;
             background: linear-gradient(135deg, #ffffff, #a0a0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        body.light .logo-text {
-            background: linear-gradient(135deg, #5865F2, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -187,7 +174,6 @@
             color: white;
         }
 
-        /* Герой-секция */
         .hero {
             padding: 80px 0 60px;
             text-align: center;
@@ -201,12 +187,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: fadeInUp 0.6s ease;
-        }
-
-        body.light .hero h1 {
-            background: linear-gradient(135deg, #5865F2, #8b5cf6, #a0a0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
@@ -271,7 +251,6 @@
             font-size: 14px;
         }
 
-        /* Секции */
         .section {
             padding: 80px 0;
         }
@@ -326,7 +305,6 @@
             font-size: 14px;
         }
 
-        /* Тарифы */
         .pricing {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -373,7 +351,6 @@
             font-size: 14px;
         }
 
-        /* Реферальная программа */
         .referral-box {
             background: linear-gradient(135deg, rgba(46,204,113,0.1), rgba(88,101,242,0.1));
             border-radius: 24px;
@@ -399,7 +376,6 @@
             color: #1a1a2e;
         }
 
-        /* Команды */
         .commands-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -422,44 +398,6 @@
             font-weight: 600;
         }
 
-        /* Форма обратной связи */
-        .feedback-form {
-            max-width: 500px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.05);
-            border-radius: 24px;
-            padding: 30px;
-        }
-
-        .feedback-form input, .feedback-form textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: white;
-            font-family: inherit;
-        }
-
-        body.light .feedback-form input,
-        body.light .feedback-form textarea {
-            background: rgba(0,0,0,0.05);
-            border-color: rgba(0,0,0,0.2);
-            color: #1a1a2e;
-        }
-
-        .feedback-form textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .feedback-form input:focus, .feedback-form textarea:focus {
-            outline: none;
-            border-color: #5865F2;
-        }
-
-        /* Футер */
         .footer {
             padding: 40px 0;
             text-align: center;
@@ -483,7 +421,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Шапка -->
         <header class="header">
             <div class="logo">
                 <div class="logo-icon">⚖️</div>
@@ -494,27 +431,20 @@
                 <a href="#pricing">Тарифы</a>
                 <a href="#referral">Рефералы</a>
                 <a href="#commands">Команды</a>
-                <a href="#feedback">Поддержка</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                    🌙 Тёмная
-                </button>
+                <button class="theme-toggle" id="themeToggle">🌙 Тёмная</button>
                 <a href="https://discord.com/oauth2/authorize?client_id=1511055146895933624&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить</a>
             </nav>
         </header>
 
-        <!-- Герой-секция -->
         <section class="hero">
             <h1>Юридический помощник<br>для Majestic RP</h1>
-            <p>Быстрый поиск по УК и ПК, ИИ-консультации, премиум-подписка и реферальная программа. Пригласите бота на свой сервер и получите доступ к полной базе законов штата Сан-Андреас.</p>
+            <p>Быстрый поиск по УК и ПК, ИИ-консультации, премиум-подписка и реферальная программа.</p>
             <div class="hero-buttons">
                 <a href="https://discord.com/oauth2/authorize?client_id=1511055146895933624&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить на сервер</a>
-                <a href="https://discord.gg/Ngvq9GTKK" class="btn btn-outline">💬 Discord сервер</a>
             </div>
             <div class="bot-status">
                 <div class="status-indicator" id="statusIndicator"></div>
                 <span id="statusText">Загрузка...</span>
-                <span style="margin-left: 10px; color:#888;">•</span>
-                <span style="margin-left: 10px;" id="uptimeText">⚡ Работает 24/7</span>
             </div>
             <div class="stats">
                 <div class="stat">
@@ -535,12 +465,11 @@
                 </div>
                 <div class="stat">
                     <div class="stat-number" id="requestsCount">-</div>
-                    <div class="stat-label">запросов в этом месяце</div>
+                    <div class="stat-label">запросов в месяце</div>
                 </div>
             </div>
         </section>
 
-        <!-- Возможности -->
         <section id="features" class="section">
             <h2 class="section-title"><span>Возможности</span> бота</h2>
             <div class="features">
@@ -577,7 +506,6 @@
             </div>
         </section>
 
-        <!-- Тарифы -->
         <section id="pricing" class="section">
             <h2 class="section-title"><span>Выберите</span> срок подписки</h2>
             <div class="pricing">
@@ -589,7 +517,7 @@
                         <li>✅ Приоритетная поддержка</li>
                         <li>✅ Все функции бота</li>
                     </ul>
-                    <a href="#buy" class="btn btn-primary">Выбрать</a>
+                    <a href="#" class="btn btn-primary">Выбрать</a>
                 </div>
                 <div class="pricing-card popular">
                     <h3>90 дней</h3>
@@ -599,7 +527,7 @@
                         <li>✅ Приоритетная поддержка</li>
                         <li>✅ Экономия 15%</li>
                     </ul>
-                    <a href="#buy" class="btn btn-primary">Выбрать</a>
+                    <a href="#" class="btn btn-primary">Выбрать</a>
                 </div>
                 <div class="pricing-card">
                     <h3>365 дней</h3>
@@ -609,21 +537,18 @@
                         <li>✅ Приоритетная поддержка</li>
                         <li>✅ Экономия 45%</li>
                     </ul>
-                    <a href="#buy" class="btn btn-primary">Выбрать</a>
+                    <a href="#" class="btn btn-primary">Выбрать</a>
                 </div>
             </div>
         </section>
 
-        <!-- Реферальная программа -->
         <section id="referral" class="section">
             <h2 class="section-title"><span>Реферальная</span> программа</h2>
             <div class="referral-box">
                 <div class="feature-icon" style="font-size: 48px;">🎁</div>
                 <h3>Приглашайте друзей и получайте награды!</h3>
                 <p>У каждого пользователя есть уникальный реферальный код.<br>Поделитесь им с друзьями и получайте бонусы.</p>
-                <div class="referral-code">
-                    /код
-                </div>
+                <div class="referral-code">/код</div>
                 <p style="margin-top: 20px;">
                     🎁 <strong>Приглашённый:</strong> +5 пробных запросов<br>
                     👑 <strong>Пригласивший:</strong> +14 дней премиума
@@ -631,7 +556,6 @@
             </div>
         </section>
 
-        <!-- Команды -->
         <section id="commands" class="section">
             <h2 class="section-title"><span>Популярные</span> команды</h2>
             <div class="commands-grid">
@@ -643,71 +567,18 @@
                 <div class="command-item"><span class="command-prefix">/код</span></div>
                 <div class="command-item"><span class="command-prefix">/активировать_код</span> ABC12345</div>
                 <div class="command-item"><span class="command-prefix">/разделы_ук</span></div>
-                <div class="command-item"><span class="command-prefix">/разделы_пк</span></div>
                 <div class="command-item"><span class="command-prefix">/поддержка</span> У меня вопрос</div>
-                <div class="command-item"><span class="command-prefix">/реф</span></div>
-                <div class="command-item"><span class="command-prefix">/статистика</span></div>
                 <div class="command-item"><span class="command-prefix">/справка</span></div>
-                <div class="command-item"><span class="command-prefix">/инфо</span></div>
             </div>
         </section>
 
-        <!-- Форма обратной связи -->
-        <section id="feedback" class="section">
-            <h2 class="section-title"><span>Свяжитесь</span> с нами</h2>
-            <div class="feedback-form">
-                <form action="https://formsubmit.co/ka3638172@gmail.com" method="POST">
-                    <input type="text" name="name" placeholder="Ваше имя" required>
-                    <input type="email" name="email" placeholder="Ваш Discord ID или email" required>
-                    <textarea name="message" placeholder="Ваше сообщение..." required></textarea>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; cursor: pointer;"> Отправить</button>
-                </form>
-                <p style="text-align: center; margin-top: 15px; font-size: 12px; color: #666;">
-                    Или напишите в Discord: <strong>@ваш_никнейм</strong>
-                </p>
-            </div>
-        </section>
-
-        <!-- Как начать -->
-        <section class="section">
-            <h2 class="section-title"><span>Как начать</span> использовать?</h2>
-            <div class="features">
-                <div class="feature-card">
-                    <div class="feature-icon">1️⃣</div>
-                    <h3>Пригласите бота</h3>
-                    <p>Нажмите кнопку «Пригласить на сервер» и выберите нужный сервер Discord.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">2️⃣</div>
-                    <h3>Начните использовать</h3>
-                    <p>Введите /справка в любом канале или в личных сообщениях бота.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">3️⃣</div>
-                    <h3>Улучшите опыт</h3>
-                    <p>Купите премиум или пригласите друзей по реферальной программе.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Футер -->
         <footer class="footer">
             <p>⚖️ Lawyer Helper — юридический помощник для Majestic RP</p>
-            <p style="margin-top: 10px; font-size: 12px;">
-                Бот создан на основе Уголовного и Процессуального кодексов штата Seattle.
-            </p>
-            <p style="margin-top: 10px;">
-                <a href="#features" style="color: #5865F2; text-decoration: none;">Возможности</a> •
-                <a href="#pricing" style="color: #5865F2; text-decoration: none;">Тарифы</a> •
-                <a href="#referral" style="color: #5865F2; text-decoration: none;">Рефералы</a> •
-                <a href="#commands" style="color: #5865F2; text-decoration: none;">Команды</a> •
-                <a href="#feedback" style="color: #5865F2; text-decoration: none;">Поддержка</a>
-            </p>
+            <p style="margin-top: 10px; font-size: 12px;">Бот создан на основе Уголовного и Процессуального кодексов штата Сан-Андреас.</p>
         </footer>
     </div>
 
     <script>
-        // ========== ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ==========
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
         
@@ -723,21 +594,17 @@
             themeToggle.innerHTML = isLight ? '☀️ Светлая' : '🌙 Тёмная';
         });
         
-        // ========== ПОЛУЧЕНИЕ РЕАЛЬНОЙ СТАТИСТИКИ ИЗ БОТА ==========
         async function fetchStats() {
             try {
-                // Запрос к API бота (замените на ваш реальный URL)
                 const response = await fetch('https://bot-lawyer.onrender.com/api/stats');
                 const data = await response.json();
                 
-                // Обновляем статистику на сайте
                 document.getElementById('ukCount').textContent = data.uk_articles || '25';
                 document.getElementById('pkCount').textContent = data.pk_articles || '16';
                 document.getElementById('usersCount').textContent = data.total_users || '0';
                 document.getElementById('premiumCount').textContent = data.active_premium || '0';
                 document.getElementById('requestsCount').textContent = data.total_requests || '0';
                 
-                // Обновляем статус бота
                 const statusIndicator = document.getElementById('statusIndicator');
                 const statusText = document.getElementById('statusText');
                 if (data.status === 'online') {
@@ -747,24 +614,16 @@
                     statusIndicator.style.background = '#e74c3c';
                     statusText.textContent = 'Бот offline';
                 }
-                
-                document.getElementById('uptimeText').textContent = data.uptime || '⚡ Работает 24/7';
-                
             } catch (error) {
-                console.error('Ошибка получения статистики:', error);
-                // Если бот не отвечает, показываем заглушку
-                document.getElementById('usersCount').textContent = '0';
-                document.getElementById('premiumCount').textContent = '0';
-                document.getElementById('requestsCount').textContent = '0';
-                document.getElementById('statusText').textContent = 'Не удалось подключиться';
+                console.error('Ошибка:', error);
+                document.getElementById('usersCount').textContent = '?';
+                document.getElementById('premiumCount').textContent = '?';
+                document.getElementById('statusText').textContent = 'Нет связи';
                 document.getElementById('statusIndicator').style.background = '#e74c3c';
             }
         }
         
-        // Загружаем статистику при загрузке страницы
         fetchStats();
-        
-        // Обновляем статистику каждые 30 секунд
         setInterval(fetchStats, 30000);
     </script>
 </body>
