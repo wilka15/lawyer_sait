@@ -432,7 +432,7 @@
                 <a href="#referral">Рефералы</a>
                 <a href="#commands">Команды</a>
                 <button class="theme-toggle" id="themeToggle">🌙 Тёмная</button>
-                <a href="https://discord.com/oauth2/authorize?client_id=1327835741704167535&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=1511081273962004681&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить</a>
             </nav>
         </header>
 
@@ -440,7 +440,7 @@
             <h1>Юридический помощник<br>для Majestic RP</h1>
             <p>Быстрый поиск по УК и ПК, ИИ-консультации, премиум-подписка и реферальная программа.</p>
             <div class="hero-buttons">
-                <a href="https://discord.com/oauth2/authorize?client_id=1327835741704167535&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить на сервер</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=1511081273962004681&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">➕ Пригласить на сервер</a>
             </div>
             <div class="bot-status">
                 <div class="status-indicator" id="statusIndicator"></div>
@@ -491,7 +491,7 @@
                 <div class="feature-card">
                     <div class="feature-icon">💎</div>
                     <h3>Премиум-подписка</h3>
-                    <p>Безлимитные запросы от 55 ₽ в месяц. Выберите срок: 30, 60, 90, 180 или 365 дней.</p>
+                    <p>Безлимитные запросы от 84 ₽ в месяц. Выберите срок: 30, 60, 90, 180 или 365 дней.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🌟</div>
@@ -596,7 +596,7 @@
         
         async function fetchStats() {
             try {
-                const response = await fetch('https://bot-lawyer.onrender.com/api/stats');
+                const response = await fetch('https://lawyer-progect.onrender.com/api/stats');
                 const data = await response.json();
                 
                 document.getElementById('ukCount').textContent = data.uk_articles || '25';
