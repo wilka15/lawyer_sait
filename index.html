@@ -8,9 +8,9 @@
     <meta name="theme-color" content="#5865F2">
     
     <!-- Favicon (иконка сайта) -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="5dc9b22b-208d-45aa-abfe-4c18b9d28845.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="5dc9b22b-208d-45aa-abfe-4c18b9d28845.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="5dc9b22b-208d-45aa-abfe-4c18b9d28845.png">
     
     <style>
         * {
@@ -665,7 +665,7 @@
         
         async function fetchStats() {
             try {
-                const response = await fetch('https://lawyer-progect.onrender.com');
+                const response = await fetch('https://lawyer-progect.onrender.com/api/stats');
                 const data = await response.json();
                 
                 document.getElementById('ukCount').textContent = data.uk_articles || '25';
