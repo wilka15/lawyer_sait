@@ -665,7 +665,7 @@
         
         async function fetchStats() {
             try {
-                const response = await fetch('https://lawyer-progect.onrender.com/api/stats');
+                const response = await fetch('https://lawyer-progect.onrender.com');
                 const data = await response.json();
                 
                 document.getElementById('ukCount').textContent = data.uk_articles || '25';
